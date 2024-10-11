@@ -8,6 +8,8 @@ public partial class CameraMover : MonoBehaviour
     [SerializeField] private MouseInputHandler _mouseInputHandler;
 
     private float _cameraCurrentAngleX;
+    private float _cameraMinAngleX = -89;
+    private float _cameraMaxAngleX = 89;
 
     public Vector3 ForwardDirection { get; private set; }
     public Vector3 RightDirection { get; private set; }
@@ -24,7 +26,7 @@ public partial class CameraMover : MonoBehaviour
         RightDirection = Vector3.ProjectOnPlane(_cameraTransform.right, Vector3.up).normalized;
 
         _cameraCurrentAngleX -= _mouseInputHandler.VerticalAxis * _verticalTurnSensitivity;
-        _cameraCurrentAngleX = Mathf.Clamp(_cameraCurrentAngleX, -89, 89);
+        _cameraCurrentAngleX = Mathf.Clamp(_cameraCurrentAngleX, _cameraMinAngleX, _cameraMaxAngleX);
         _cameraTransform.localEulerAngles = Vector3.right * _cameraCurrentAngleX;
     }
 }
